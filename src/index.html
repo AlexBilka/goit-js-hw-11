@@ -5,7 +5,7 @@
     <link rel="icon" type="image/x-icon" href="./favicon-32x32.png" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>goit-js-hw-10</title>
+    <title>goit-js-hw-11</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -17,16 +17,24 @@
   <body>
     <load ="partials/header.html" />
     <section>
-      <nav class="nav">
-        <ul class="nav-list">
-          <li>
-            <a href="./1-timer.html" class="nav-item">Timer</a>
-          </li>
-          <li>
-            <a href="./2-snackbar.html" class="nav-item">Snackbar</a>
-          </li>
-        </ul>
-      </nav>
+      <div class="formCont">
+        <form class="form">
+          <input
+            type="text"
+            class="input"
+            name="imgInput"
+            placeholder="Search images..."
+          />
+          <button type="submit" class="btn">Search</button>
+        </form>
+      </div>
+      <div class="loader-container">
+        <div class="loader"></div>
+      </div>
+      <div class="gallery-container">
+        <ul class="gallery"></ul>
+      </div>
     </section>
+    <script type="module" src="./main.js"></script>
   </body>
 </html>
