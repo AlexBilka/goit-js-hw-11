@@ -5,7 +5,7 @@
     <link rel="icon" type="image/x-icon" href="./favicon-32x32.png" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>goit-js-hw-10</title>
+    <title>goit-js-hw-11</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -13,27 +13,38 @@
       rel="stylesheet"
     />
     
-    <link rel="stylesheet" href="/goit-js-hw-10/assets/styles-886895ab.css">
+    <script type="module" crossorigin src="/goit-js-hw-10/commonHelpers.js"></script>
+    <link rel="modulepreload" crossorigin href="/goit-js-hw-10/assets/vendor-5b791d57.js">
+    <link rel="stylesheet" href="/goit-js-hw-10/assets/vendor-cf6910df.css">
+    <link rel="stylesheet" href="/goit-js-hw-10/assets/index-d26af257.css">
   </head>
   <body>
     <header class="header">
   <div class="header-wrap">
     <img src="/goit-js-hw-10/assets/go-it-aa4be85a.svg" alt="GO-IT logo" />
-    <h1 class="title">goit-js-hw-10</h1>
+    <h1 class="title">goit-js-hw-11</h1>
   </div>
 </header>
 
     <section>
-      <nav class="nav">
-        <ul class="nav-list">
-          <li>
-            <a href="./1-timer.html" class="nav-item">Timer</a>
-          </li>
-          <li>
-            <a href="./2-snackbar.html" class="nav-item">Snackbar</a>
-          </li>
-        </ul>
-      </nav>
+      <div class="formCont">
+        <form class="form">
+          <input
+            type="text"
+            class="input"
+            name="imgInput"
+            placeholder="Search images..."
+          />
+          <button type="submit" class="btn">Search</button>
+        </form>
+      </div>
+      <div class="loader-container">
+        <div class="loader"></div>
+      </div>
+      <div class="gallery-container">
+        <ul class="gallery"></ul>
+      </div>
     </section>
+    
   </body>
 </html>
