@@ -56,6 +56,7 @@ function handleSubmit(event) {
         loaderStop();
       });
   } else {
+    loaderStop();
     iziToast.error({
       message: 'Please, enter a query, for example "cats"',
       position: 'topRight',
