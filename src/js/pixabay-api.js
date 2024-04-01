@@ -1,26 +1,20 @@
-import { elem, word, showLoading } from '../main';
+const API_KEY = '21675808-1204a02bf0a9f212ef3ae3caa';
+const BASE_URL = 'https://pixabay.com';
 
-export function fetchingFrom() {
-  const options = {
-    method: 'GET',
-  };
-
-  const params = new URLSearchParams({
-    key: '42957626-41f27679caf00334274850a6e',
-    q: word,
+export function getItems(query) {
+  const params = {
+    key: API_KEY,
+    q: query,
     image_type: 'photo',
     orientation: 'horizontal',
     safesearch: 'true',
-  });
-
-  const url = `https://pixabay.com/api/?${params}`;
-
-  showLoading();
-
-  return fetch(url, options).then(response => {
+  };
+  const options = new URLSearchParams(params);
+  return fetch(`${BASE_URL}/api/?${options}`).then(response => {
     if (!response.ok) {
-      throw new Error(response.status);
+      throw new Error('Ups... The word is wrong!');
     }
+
     return response.json();
   });
 }

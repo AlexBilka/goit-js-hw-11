@@ -6,58 +6,69 @@ import 'izitoast/dist/css/iziToast.min.css';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
-import { fetchingFrom } from './js/pixabay-api';
-import { render } from './js/render-functions';
+import { getItems } from './js/pixabay-api';
+import { galleryMarkup } from './js/render-functions';
 
-export const elem = {
-  gallery: document.querySelector('.gallery'),
-  form: document.querySelector('.form'),
-  wordInput: document.querySelector('.input'),
-  loader: document.querySelector('.loader'),
-};
+// ============= document elements =============
 
-export const lightbox = new SimpleLightbox('.gallery-link', {
+const form = document.querySelector('.form');
+const gallery = document.querySelector('.gallery');
+const loader = document.querySelector('.loader');
+
+form.addEventListener('submit', handleSubmit);
+
+const lightbox = new SimpleLightbox('.gallery-link', {
   captionsData: 'alt',
   captionDelay: 250,
   overlay: true,
   overlayOpacity: 0.7,
 });
 
-export let word = '';
+// ============= Submit function =============
 
-hideLoading();
+function handleSubmit(event) {
+  event.preventDefault();
 
-elem.form.addEventListener('submit', e => {
-  e.preventDefault();
+  // ================= reset ==================
+  loaderPlay();
+  gallery.innerHTML = '';
 
-  elem.gallery.innerHTML = '';
-  word = elem.wordInput.value.trim();
+  const query = event.target['queryInput'].value.trim();
 
-  if (word !== '') {
-    fetchingFrom(word)
-      .then(data => {
-        render(data);
-        hideLoading();
+  if (query !== '') {
+    getItems(query)
+      .then(response => {
+        console.log(response);
+        if (response.hits.length === 0) {
+          return iziToast.error({
+            message:
+              'Sorry, there are no images matching your search query. Please try again!',
+            position: 'topRight',
+          });
+        }
+        gallery.innerHTML = galleryMarkup(response.hits);
+        lightbox.refresh();
       })
-      .catch(error => console.log(error));
+      .catch(error => {
+        console.log(error);
+      })
+      .finally(() => {
+        loaderStop();
+      });
   } else {
-    displayToast('Please complete the field!');
+    iziToast.error({
+      message: 'Please, enter a query, for example "cats"',
+      position: 'topRight',
+    });
   }
-  elem.form.reset();
-});
 
-export function displayToast(message) {
-  iziToast.error({
-    title: 'Error',
-    message: message,
-    position: 'topRight',
-  });
+  event.currentTarget.reset(); // reset input value
 }
 
-export function showLoading() {
-  elem.loader.style.display = 'block';
+function loaderPlay() {
+  loader.classList.remove('is-hidden');
 }
 
-function hideLoading() {
-  elem.loader.style.display = 'none';
+function loaderStop() {
+  loader.classList.add('is-hidden');
 }
