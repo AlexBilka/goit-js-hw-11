@@ -17,6 +17,8 @@ const loader = document.querySelector('.loader');
 
 form.addEventListener('submit', handleSubmit);
 
+// =========== SimpleLightbox initialization ===========
+
 const lightbox = new SimpleLightbox('.gallery-link', {
   captionsData: 'alt',
   captionDelay: 250,
@@ -29,16 +31,14 @@ const lightbox = new SimpleLightbox('.gallery-link', {
 function handleSubmit(event) {
   event.preventDefault();
 
-  // ================= reset ==================
   loaderPlay();
-  gallery.innerHTML = '';
-
+  gallery.innerHTML = ''; // Clear gallery
   const query = event.target['queryInput'].value.trim();
 
   if (query !== '') {
     getItems(query)
+      // -----------------------------------------
       .then(response => {
-        console.log(response);
         if (response.hits.length === 0) {
           return iziToast.error({
             message:
@@ -46,15 +46,19 @@ function handleSubmit(event) {
             position: 'topRight',
           });
         }
-        gallery.innerHTML = galleryMarkup(response.hits);
+        gallery.innerHTML = galleryMarkup(response.hits); // Create markup
         lightbox.refresh();
       })
+      // -----------------------------------------
       .catch(error => {
         console.log(error);
       })
+      // -----------------------------------------
       .finally(() => {
         loaderStop();
       });
+
+    // --------------------------------------------
   } else {
     loaderStop();
     iziToast.error({
@@ -63,13 +67,14 @@ function handleSubmit(event) {
     });
   }
 
-  event.currentTarget.reset(); // reset input value
+  event.currentTarget.reset(); // clear input value
 }
+
+// ============= Loader functions =============
 
 function loaderPlay() {
   loader.classList.remove('is-hidden');
 }
-
 function loaderStop() {
   loader.classList.add('is-hidden');
 }
